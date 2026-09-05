@@ -1,2 +1,2 @@
-# Business
+# Business learning app
 French learning app

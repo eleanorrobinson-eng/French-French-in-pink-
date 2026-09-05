@@ -12,17 +12,47 @@
     <h1>🇫🇷 French Conversation Flashcards</h1>
     <p class="subtitle">Practice everyday French vocabulary!</p>
 
-    <!-- XP Counter -->
-    <div class="xp-container">
-      <div class="xp-info">
-        <span class="xp-label">⭐ XP</span>
-        <span class="xp-value" id="xpValue">0</span>
-        <span class="xp-level" id="xpLevel">Level 1</span>
+    <!-- Persistent XP Banner -->
+    <div class="total-xp-banner">
+      <span class="total-xp-icon">⭐</span>
+      <div class="total-xp-text">
+        <span class="total-xp-label">Total XP Earned</span>
+        <span class="total-xp-value" id="totalXPBanner">0 XP</span>
       </div>
-      <div class="xp-bar-container">
-        <div class="xp-bar" id="xpBar"></div>
+      <span class="total-xp-level-badge" id="totalXPLevelBadge">Level 1</span>
+    </div>
+
+    <!-- Stats Row: XP + Streak -->
+    <div class="stats-row">
+
+      <!-- XP Counter -->
+      <div class="xp-container">
+        <div class="xp-info">
+          <span class="xp-label">⭐ XP</span>
+          <span class="xp-value" id="xpValue">0</span>
+          <span class="xp-level" id="xpLevel">Level 1</span>
+        </div>
+        <div class="xp-bar-container">
+          <div class="xp-bar" id="xpBar"></div>
+        </div>
+        <p class="xp-next" id="xpNext">50 XP to next level</p>
       </div>
-      <p class="xp-next" id="xpNext">50 XP to next level</p>
+
+      <!-- Streak Tracker -->
+      <div class="streak-container">
+        <div class="streak-top">
+          <span class="streak-fire" id="streakFire">🔥</span>
+          <span class="streak-number" id="streakNumber">0</span>
+        </div>
+        <p class="streak-label">Current Streak</p>
+        <div class="streak-divider"></div>
+        <div class="streak-best-row">
+          <span class="streak-best-label">🏆 Best</span>
+          <span class="streak-best-number" id="bestStreakNumber">0</span>
+        </div>
+        <div class="streak-dots" id="streakDots"></div>
+      </div>
+
     </div>
   </header>
 
@@ -37,30 +67,21 @@
 
         <!-- Front of card (English) -->
         <div class="card-front" id="cardFront">
-          <!-- Eiffel Tower SVG top right corner -->
           <div class="eiffel-wrapper">
             <svg class="eiffel-svg" viewBox="0 0 100 200"
                  xmlns="http://www.w3.org/2000/svg"
                  aria-label="Eiffel Tower decoration">
-              <!-- Legs -->
               <line x1="20" y1="200" x2="45" y2="100" stroke="#c9748a" stroke-width="5" stroke-linecap="round"/>
               <line x1="80" y1="200" x2="55" y2="100" stroke="#c9748a" stroke-width="5" stroke-linecap="round"/>
-              <!-- Lower cross brace -->
               <line x1="22" y1="170" x2="78" y2="170" stroke="#c9748a" stroke-width="4" stroke-linecap="round"/>
-              <!-- Mid section -->
               <line x1="45" y1="100" x2="38" y2="60"  stroke="#c9748a" stroke-width="4" stroke-linecap="round"/>
               <line x1="55" y1="100" x2="62" y2="60"  stroke="#c9748a" stroke-width="4" stroke-linecap="round"/>
-              <!-- Upper cross brace -->
               <line x1="38" y1="80"  x2="62" y2="80"  stroke="#c9748a" stroke-width="3" stroke-linecap="round"/>
-              <!-- Upper section -->
               <line x1="38" y1="60"  x2="44" y2="30"  stroke="#c9748a" stroke-width="3" stroke-linecap="round"/>
               <line x1="62" y1="60"  x2="56" y2="30"  stroke="#c9748a" stroke-width="3" stroke-linecap="round"/>
-              <!-- Top cross brace -->
               <line x1="44" y1="45"  x2="56" y2="45"  stroke="#c9748a" stroke-width="2.5" stroke-linecap="round"/>
-              <!-- Spire -->
               <line x1="44" y1="30"  x2="50" y2="5"   stroke="#c9748a" stroke-width="2.5" stroke-linecap="round"/>
               <line x1="56" y1="30"  x2="50" y2="5"   stroke="#c9748a" stroke-width="2.5" stroke-linecap="round"/>
-              <!-- Tip dot -->
               <circle cx="50" cy="4" r="2.5" fill="#c9748a"/>
             </svg>
           </div>
@@ -70,7 +91,6 @@
 
         <!-- Back of card (French) -->
         <div class="card-back" id="cardBack">
-          <!-- Eiffel Tower SVG top right corner (lighter for dark bg) -->
           <div class="eiffel-wrapper">
             <svg class="eiffel-svg" viewBox="0 0 100 200"
                  xmlns="http://www.w3.org/2000/svg"
@@ -91,9 +111,22 @@
           </div>
           <p class="card-label">French</p>
           <p class="card-word" id="frenchWord"></p>
+          <button class="pronounce-btn" id="pronounceBtn"
+                  aria-label="Hear pronunciation">
+            🔊 Hear it
+          </button>
         </div>
 
       </div>
+    </div>
+
+    <!-- Pronunciation row -->
+    <div class="pronounce-row">
+      <button class="pronounce-btn-main" id="pronounceBtnMain"
+              aria-label="Hear French pronunciation">
+        🔊 Pronounce French
+      </button>
+      <span class="pronounce-hint" id="pronounceHint"></span>
     </div>
 
     <p class="hint-text">Click the card to flip it!</p>
@@ -114,24 +147,44 @@
 
     <div class="feedback" id="feedback"></div>
 
-    <!-- XP Toast Notification -->
-    <div class="xp-toast" id="xpToast"></div>
+    <!-- Toasts -->
+    <div class="xp-toast"     id="xpToast"></div>
+    <div class="streak-toast" id="streakToast"></div>
 
     <div class="nav-buttons">
       <button id="prevBtn">⬅ Previous</button>
       <button id="nextBtn">Next ➡</button>
     </div>
 
+    <!-- Score / End of deck panel -->
     <div class="score-section" id="scoreSection" style="display:none;">
       <h2>🎉 You finished the deck!</h2>
       <p id="scoreText"></p>
-      <p id="xpSummary" class="xp-summary"></p>
+      <p id="xpSummary"    class="xp-summary"></p>
+      <p id="streakSummary" class="streak-summary"></p>
       <button id="restartBtn">🔄 Start Over</button>
     </div>
+
+    <!-- Score History Panel -->
+    <div class="history-section" id="historySection">
+      <div class="history-header">
+        <h2>📜 Score History</h2>
+        <button class="clear-history-btn" id="clearHistoryBtn">🗑️ Clear</button>
+      </div>
+      <p class="history-subtitle">Your last 10 sessions</p>
+      <div class="history-list" id="historyList">
+        <p class="history-empty" id="historyEmpty">
+          No sessions yet — finish a deck to see your history here!
+        </p>
+      </div>
+    </div>
+
   </main>
 
   <footer>
-    <p>Built for French learners 💙 | Customize the vocabulary in <code>script.js</code></p>
+    <p>Built for French learners 💙 |
+       Customize the vocabulary in <code>script.js</code>
+    </p>
   </footer>
 
   <script src="script.js"></script>
